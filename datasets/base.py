@@ -251,7 +251,17 @@ class BaseDataset(data.Dataset):
                'cls_theta':cls_theta,
                }
         return ret
-
+    
+    
+    def generate_ground_truth_PioI(self, image, annotation):
+        '''
+        Prepare PoiU ground truth data
+        '''
+        
+        return None
+        
+        
+        
     def __getitem__(self, index):
         image = self.load_image(index)
         image_h, image_w, c = image.shape
