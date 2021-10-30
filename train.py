@@ -157,9 +157,9 @@ class TrainModule(object):
         else:
             self.model.eval()
         running_loss = 0.
-        print('*******Data dictionary before modelling:', data_dict)
-        
+                
         for data_dict in data_loader:
+            print('*******Data dictionary before modelling:', data_dict)
             for name in data_dict:
                 data_dict[name] = data_dict[name].to(device=self.device, non_blocking=True)
             if phase == 'train':
