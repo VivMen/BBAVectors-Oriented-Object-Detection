@@ -280,6 +280,8 @@ class BaseDataset(data.Dataset):
             image, annotation = self.data_transform(image, annotation)
             print('Image obj#####:' ,image)
             print('Annotations obj#####:' ,annotation)
+            print('Saving C,wh+theta version of annotations')
+            torch.save({'image': image, 'annotation': annotation}, '../Test/tensor.pt')
             data_dict = self.generate_ground_truth(image, annotation)
             return data_dict
 
