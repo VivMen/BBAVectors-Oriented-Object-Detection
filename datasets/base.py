@@ -275,6 +275,8 @@ class BaseDataset(data.Dataset):
 
         elif self.phase == 'train':
             annotation = self.load_annotation(index)
+            print('Image obj before transformation #####:' ,image)
+            print('Annotations obj before transformation #####:' ,annotation)
             image, annotation = self.data_transform(image, annotation)
             print('Image obj#####:' ,image)
             print('Annotations obj#####:' ,annotation)
