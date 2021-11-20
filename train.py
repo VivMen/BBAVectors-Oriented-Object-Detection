@@ -157,12 +157,14 @@ class TrainModule(object):
                             self.optimizer)
 
     def run_epoch(self, phase, data_loader, criterion):
+        print("****Run Epoch - 1")
         if phase == 'train':
+            print("****Run Epoch - 2")
             self.model.train()
         else:
             self.model.eval()
         running_loss = 0.
-                
+        print("****Run Epoch - 3")        
         for data_dict in data_loader:
             print('*******Data dictionary before modelling:', data_dict)
             for name in data_dict:
