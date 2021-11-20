@@ -170,8 +170,8 @@ class BaseDataset(data.Dataset):
         reg_mask = np.zeros((self.max_objs), dtype=np.uint8)
         num_objs = min(annotation['rect'].shape[0], self.max_objs)
         # ###################################### view Images #######################################
-        copy_image1 = cv2.resize(image, (image_w, image_h))
-        copy_image2 = copy_image1.copy()
+        # copy_image1 = cv2.resize(image, (image_w, image_h))
+        # copy_image2 = copy_image1.copy()
         # ##########################################################################################
         for k in range(num_objs):
             rect = annotation['rect'][k, :]
@@ -206,21 +206,21 @@ class BaseDataset(data.Dataset):
             wh[k, 4:6] = bb - ct
             wh[k, 6:8] = ll - ct
             #####################################################################################
-            # draw
-            cv2.line(copy_image1, (cen_x, cen_y), (int(tt[0]), int(tt[1])), (0, 0, 255), 1, 1)
-            cv2.line(copy_image1, (cen_x, cen_y), (int(rr[0]), int(rr[1])), (255, 0, 255), 1, 1)
-            cv2.line(copy_image1, (cen_x, cen_y), (int(bb[0]), int(bb[1])), (0, 255, 255), 1, 1)
-            cv2.line(copy_image1, (cen_x, cen_y), (int(ll[0]), int(ll[1])), (255, 0, 0), 1, 1)
+            # # draw
+            # cv2.line(copy_image1, (cen_x, cen_y), (int(tt[0]), int(tt[1])), (0, 0, 255), 1, 1)
+            # cv2.line(copy_image1, (cen_x, cen_y), (int(rr[0]), int(rr[1])), (255, 0, 255), 1, 1)
+            # cv2.line(copy_image1, (cen_x, cen_y), (int(bb[0]), int(bb[1])), (0, 255, 255), 1, 1)
+            # cv2.line(copy_image1, (cen_x, cen_y), (int(ll[0]), int(ll[1])), (255, 0, 0), 1, 1)
             #####################################################################################
             # horizontal channel
             w_hbbox, h_hbbox = self.cal_bbox_wh(pts_4)
             wh[k, 8:10] = 1. * w_hbbox, 1. * h_hbbox
             #####################################################################################
-            # draw
-            cv2.line(copy_image2, (cen_x, cen_y), (int(cen_x), int(cen_y-wh[k, 9]/2)), (0, 0, 255), 1, 1)
-            cv2.line(copy_image2, (cen_x, cen_y), (int(cen_x+wh[k, 8]/2), int(cen_y)), (255, 0, 255), 1, 1)
-            cv2.line(copy_image2, (cen_x, cen_y), (int(cen_x), int(cen_y+wh[k, 9]/2)), (0, 255, 255), 1, 1)
-            cv2.line(copy_image2, (cen_x, cen_y), (int(cen_x-wh[k, 8]/2), int(cen_y)), (255, 0, 0), 1, 1)
+            # # draw
+            # cv2.line(copy_image2, (cen_x, cen_y), (int(cen_x), int(cen_y-wh[k, 9]/2)), (0, 0, 255), 1, 1)
+            # cv2.line(copy_image2, (cen_x, cen_y), (int(cen_x+wh[k, 8]/2), int(cen_y)), (255, 0, 255), 1, 1)
+            # cv2.line(copy_image2, (cen_x, cen_y), (int(cen_x), int(cen_y+wh[k, 9]/2)), (0, 255, 255), 1, 1)
+            # cv2.line(copy_image2, (cen_x, cen_y), (int(cen_x-wh[k, 8]/2), int(cen_y)), (255, 0, 0), 1, 1)
             #####################################################################################
             # v0
             # if abs(theta)>3 and abs(theta)<90-3:
@@ -230,16 +230,16 @@ class BaseDataset(data.Dataset):
             if jaccard_score<0.95:
                 cls_theta[k, 0] = 1
         # ###################################### view Images #####################################
-        # hm_show = np.uint8(cv2.applyColorMap(np.uint8(hm[0, :, :] * 255), cv2.COLORMAP_JET))
-        # copy_image = cv2.addWeighted(np.uint8(copy_image), 0.4, hm_show, 0.8, 0)
-            if jaccard_score>0.95:
-                print(theta, jaccard_score, cls_theta[k, 0])
-                cv2.imshow('img1', cv2.resize(np.uint8(copy_image1), (image_w*4, image_h*4)))
-                cv2.imshow('img2', cv2.resize(np.uint8(copy_image2), (image_w*4, image_h*4)))
-                key = cv2.waitKey(0)&0xFF
-                if key==ord('q'):
-                    cv2.destroyAllWindows()
-                    exit()
+        # # hm_show = np.uint8(cv2.applyColorMap(np.uint8(hm[0, :, :] * 255), cv2.COLORMAP_JET))
+        # # copy_image = cv2.addWeighted(np.uint8(copy_image), 0.4, hm_show, 0.8, 0)
+        #     if jaccard_score>0.95:
+        #         print(theta, jaccard_score, cls_theta[k, 0])
+        #         cv2.imshow('img1', cv2.resize(np.uint8(copy_image1), (image_w*4, image_h*4)))
+        #         cv2.imshow('img2', cv2.resize(np.uint8(copy_image2), (image_w*4, image_h*4)))
+        #         key = cv2.waitKey(0)&0xFF
+        #         if key==ord('q'):
+        #             cv2.destroyAllWindows()
+        #             exit()
         # #########################################################################################
 
         ret = {'input': image,
@@ -284,8 +284,8 @@ class BaseDataset(data.Dataset):
             torch.save({'image': image, 'annotation': annotation}, '../Test/tensor.pt')
             data_dict = self.generate_ground_truth(image, annotation)
             ### adding back c,wh+theta annotations to data dictionary
-            #data_dict['original_cat'] = annotation['cat']
-            #data_dict['original_rect'] = annotation['rect']
+            data_dict['original_cat'] = annotation['cat']
+            data_dict['original_rect'] = annotation['rect']
             
             return data_dict
 
