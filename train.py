@@ -77,12 +77,13 @@ class TrainModule(object):
         return model, optimizer, epoch
 
     def train_network(self, args):
+        print("****Train Network - 1")
 
         self.optimizer = torch.optim.Adam(self.model.parameters(), args.init_lr)
         self.scheduler = torch.optim.lr_scheduler.ExponentialLR(self.optimizer, gamma=0.96, last_epoch=-1)
         save_path = 'weights_'+args.dataset
         start_epoch = 1
-        
+        print("****Train Network - 2")
         # add resume part for continuing training when break previously, 10-16-2020
         if args.resume_train:
             self.model, self.optimizer, start_epoch = self.load_model(self.model, 
@@ -99,11 +100,13 @@ class TrainModule(object):
                 # dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs
                 self.model = nn.DataParallel(self.model)
         self.model.to(self.device)
+        print("****Train Network - 3")
 
         criterion = loss.LossAll()
         print('Setting up data...')
 
         dataset_module = self.dataset[args.dataset]
+        print("****Train Network - 4")
 
         dsets = {x: dataset_module(data_dir=args.data_dir,
                                    phase=x,
