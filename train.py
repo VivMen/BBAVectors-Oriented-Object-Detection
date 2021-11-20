@@ -164,8 +164,10 @@ class TrainModule(object):
         else:
             self.model.eval()
         running_loss = 0.
-        print("****Run Epoch - 3")        
+        print("****Run Epoch - 3")
+        print("*****Data loader obj: ", data_loader)
         for data_dict in data_loader:
+            print("****Run Epoch - 4")     
             print('*******Data dictionary before modelling:', data_dict)
             for name in data_dict:
                 data_dict[name] = data_dict[name].to(device=self.device, non_blocking=True)
