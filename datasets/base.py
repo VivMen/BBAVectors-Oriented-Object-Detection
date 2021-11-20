@@ -284,7 +284,9 @@ class BaseDataset(data.Dataset):
             torch.save({'image': image, 'annotation': annotation}, '../Test/tensor.pt')
             data_dict = self.generate_ground_truth(image, annotation)
             ### adding back c,wh+theta annotations to data dictionary
-            data_dict['original_annotations'] = annotation 
+            data_dict['original_cat'] = annotation['cat']
+            data_dict['original_rect'] = annotation['rect']
+            data_dict['original_image'] = annotation['image']
             
             return data_dict
 
