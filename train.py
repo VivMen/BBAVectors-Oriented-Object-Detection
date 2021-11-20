@@ -127,12 +127,14 @@ class TrainModule(object):
         print('Starting training...')
         train_loss = []
         ap_list = []
+        print("****Train Network - 5")
         for epoch in range(start_epoch, args.num_epoch+1):
             print('-'*10)
             print('Epoch: {}/{} '.format(epoch, args.num_epoch))
             epoch_loss = self.run_epoch(phase='train',
                                         data_loader=dsets_loader['train'],
                                         criterion=criterion)
+            print("****Train Network - 6")
             train_loss.append(epoch_loss)
             self.scheduler.step(epoch)
 
